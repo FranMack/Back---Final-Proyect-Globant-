@@ -1,15 +1,15 @@
 const express = require("express");
 const routerUser = express.Router();
 
-const UserController = require("../controllers/user.controllers")
-
+const UserController = require("../controllers/user.controllers");
 
 routerUser.post("/register", UserController.createUser);
+
+routerUser.post("/login", UserController.loginUser);
 
 routerUser.get("/profile/:username", UserController.getProfile);
 
 routerUser.put("/profile/:username", UserController.updateProfile);
-
 
 //ruta provisoria para ponder seedear la base de datos, borrar cuando este la ruta a utilizar
 /*

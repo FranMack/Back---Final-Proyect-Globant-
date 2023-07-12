@@ -1,4 +1,4 @@
-const userModel = require("../models/user.model")
+const userModel = require("../models/user.model");
 
 class UserService {
   async createUser(data) {
@@ -12,6 +12,35 @@ class UserService {
       const newUser = new userModel(data);
       await newUser.setPassword(data.password);
       return await newUser.save();
+    } catch (error) {
+      throw new Error("Error creating user: " + error.message);
+    }
+  }
+  async loginUser(data) {
+    try {
+      const { email, password } = data;
+      const user = await userModel
+        .findOne({ email })
+        .select("email username salt id first_name last_name");
+
+      if (!user) throw new Error("User not exist");
+
+      if (!user.validPassword(password)) throw new Error("Wrong password");
+
+      const token = jsonwebtoken.sign(
+        { data: user.id },
+        process.env.TOKEN_SECRET,
+        { expiresIn: "24h" }
+      );
+
+      user.password = undefined;
+      user.salt = undefined;
+
+      return {
+        token,
+        ...user._doc,
+        id: user.id,
+      };
     } catch (error) {
       throw new Error("Error creating user: " + error.message);
     }
@@ -59,8 +88,6 @@ class UserService {
       throw new Error(error.message);
     }
   }
-
 }
 
 module.exports = UserService;
-
