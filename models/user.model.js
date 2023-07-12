@@ -50,8 +50,8 @@ const userSchema = new mongoose.Schema(
     },
     salt: {
       type: String,
-    /*   required: true,
-      select: false, */
+       required: true,
+      select: false, 
     },
   },
   { modelOptions }
