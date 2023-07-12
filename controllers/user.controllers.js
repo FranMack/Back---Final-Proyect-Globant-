@@ -12,6 +12,17 @@ class UserController {
     }
   }
 
+  static loginUser = async (req, res) => {
+    try {
+      const userData = req.body;
+      const userService = new UserService();
+      const user = await userService.loginUser(userData);
+      res.status(201).json({ user });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  };
+
   static getProfile = async (req, res) => {
     try {
       const username = req.params.username;
