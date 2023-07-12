@@ -4,13 +4,14 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const models = require("./models");
 require("dotenv").config();
-
+const routes=require("./routes/index")
 const app = express();
 
 app.use(cors({ origin: process.env.FRONT_API_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use("/api/v1", routes);
 
 
 const PORT = process.env.PORT;
