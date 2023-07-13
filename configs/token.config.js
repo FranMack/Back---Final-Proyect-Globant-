@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
-export const validateToken = (req, res) => {
+const validateToken = (req, res) => {
   try {
     const carrierHeader = req.headers["authorization"];
     if (!carrierHeader) return false;
@@ -10,18 +10,19 @@ export const validateToken = (req, res) => {
     if (!token)
       return res.status(401).json({ message: "authorization denied" });
 
-    return jwt.verify(token, process.env.TOKEN_SECRET);
+    return jwt.verify(token, process.env.TOKEN_SECRET_KEY);
   } catch {
     return false;
   }
 };
 
-export const generateToken = (user) => {
+const generateToken = (user) => {
   const id = user.id;
-
-  const token = jsonwebtoken.sign({ data: id }, process.env.TOKEN_SECRET_KEY, {
+  const token = jwt.sign({ data: id }, process.env.TOKEN_SECRET_KEY, {
     expiresIn: "24h",
   });
 
+  console.log("token ", token);
   return token;
 };
+module.exports = { generateToken, validateToken };

@@ -14,6 +14,7 @@ class UserController {
 
   static loginUser = async (req, res) => {
     try {
+      console.log("llega", req.body);
       const userData = req.body;
       const userService = new UserService();
       const user = await userService.loginUser(res, userData);
