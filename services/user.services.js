@@ -1,6 +1,7 @@
 const userModel = require("../models/user.model");
 const jsonwebtoken = require("jsonwebtoken");
 const responseHandler = require("../handlers/response.handler");
+const tokenConfig = require("../configs/token.config");
 
 class UserService {
   async createUser(data) {
@@ -31,12 +32,7 @@ class UserService {
       if (!validPassword)
         return responseHandler.badrequest(res, "Wrong password");
 
-      const token = jsonwebtoken.sign(
-        { data: user.id },
-        process.env.TOKEN_SECRET_KEY,
-        { expiresIn: "24h" }
-      );
-
+      const token = tokenConfig.generateToken(user);
       user.password = undefined;
       user.salt = undefined;
 
