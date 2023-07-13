@@ -51,12 +51,11 @@ const userSchema = new mongoose.Schema(
     salt: {
       type: String,
 
-       required: true,
-      select: false, 
+      required: true,
+      select: false,
 
       required: false,
       select: false,
-
     },
   },
   { modelOptions }
@@ -70,7 +69,8 @@ userSchema.methods.setPassword = async function (password) {
 };
 
 userSchema.methods.validPassword = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  const hashedPassword = await bcrypt.hash(password, this.salt);
+  return this.password === hashedPassword;
 };
 
 const userModel = mongoose.model("User", userSchema);

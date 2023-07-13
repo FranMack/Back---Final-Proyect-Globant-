@@ -1,4 +1,6 @@
 const userModel = require("../models/user.model");
+const jsonwebtoken = require("jsonwebtoken");
+const responseHandler = require("../handlers/response.handler");
 
 class UserService {
   async createUser(data) {
@@ -16,20 +18,22 @@ class UserService {
       throw new Error("Error creating user: " + error.message);
     }
   }
-  async loginUser(data) {
+  async loginUser(res, data) {
     try {
       const { email, password } = data;
       const user = await userModel
         .findOne({ email })
-        .select("email username salt id first_name last_name");
+        .select("email username password salt id first_name last_name");
 
-      if (!user) throw new Error("User not exist");
+      if (!user) return responseHandler.badrequest(res, "User not exist");
 
-      if (!user.validPassword(password)) throw new Error("Wrong password");
+      const validPassword = await user.validPassword(password);
+      if (!validPassword)
+        return responseHandler.badrequest(res, "Wrong password");
 
       const token = jsonwebtoken.sign(
         { data: user.id },
-        process.env.TOKEN_SECRET,
+        process.env.TOKEN_SECRET_KEY,
         { expiresIn: "24h" }
       );
 
