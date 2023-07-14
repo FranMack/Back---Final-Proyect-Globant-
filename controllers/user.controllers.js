@@ -18,7 +18,7 @@ class UserController {
       const userData = req.body;
       const userService = new UserService();
       const user = await userService.loginUser(res, userData);
-      res.status(201).json({ user });
+      res.status(201).json(user);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }
