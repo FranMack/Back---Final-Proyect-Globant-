@@ -3,12 +3,10 @@ const jwt = require("jsonwebtoken");
 const validateToken = (req, res) => {
   try {
     const carrierHeader = req.headers["authorization"];
+    console.log("carrier", carrierHeader);
     if (!carrierHeader) return false;
 
     const token = carrierHeader.split(" ")[1];
-
-    if (!token)
-      return res.status(401).json({ message: "authorization denied" });
 
     return jwt.verify(token, process.env.TOKEN_SECRET_KEY);
   } catch {
@@ -22,7 +20,6 @@ const generateToken = (user) => {
     expiresIn: "24h",
   });
 
-  console.log("token ", token);
   return token;
 };
 module.exports = { generateToken, validateToken };

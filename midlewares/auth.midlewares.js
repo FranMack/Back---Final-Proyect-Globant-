@@ -1,15 +1,16 @@
-const tokenConfig = require("../configs/token.config");
+const { validateToken } = require("../configs/token.config");
 const userModel = require("../models/user.model");
+const responseHandler = require("../handlers/response.handler");
 
-export const auth = async (req, res, next) => {
-  const tokenDecoded = tokenConfig.validateToken(req);
+const auth = async (req, res, next) => {
+  const tokenDecoded = validateToken(req);
 
-  if (!tokenDecoded) return res.status(401).json({ message: "not authorized" });
-
+  if (!tokenDecoded) return responseHandler.unauthorize(res);
   const user = await userModel.findById(tokenDecoded.data);
-
-  if (!user) return res.status(401).json({ message: "not authorized" });
+  if (!user) return responseHandler.unauthorize(res);
 
   req.user = user;
   next();
 };
+
+module.exports = { auth };

@@ -88,6 +88,15 @@ class UserService {
       throw new Error(error.message);
     }
   }
+
+  static async getInfo(userId) {
+    try {
+      const user = await userModel.findById(userId);
+      return user;
+    } catch {
+      throw new Error("Error retrieving user information");
+    }
+  }
 }
 
 module.exports = UserService;

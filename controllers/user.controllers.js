@@ -1,4 +1,5 @@
 const UserService = require("../services/user.services");
+const responseHandler = require("../handlers/response.handler");
 
 class UserController {
   static async createUser(req, res) {
@@ -14,7 +15,6 @@ class UserController {
 
   static loginUser = async (req, res) => {
     try {
-      console.log("llega", req.body);
       const userData = req.body;
       const userService = new UserService();
       const user = await userService.loginUser(res, userData);
@@ -75,6 +75,18 @@ class UserController {
       } else {
         res.status(500).json({ error: "Error interno del servidor" });
       }
+    }
+  };
+
+  static getInfo = async (req, res) => {
+    try {
+      const userId = req.user.id;
+
+      const user = await UserService.getInfo(userId);
+      if (!user) return responseHandler.notfound(res);
+      responseHandler.ok(res, user);
+    } catch {
+      responseHandler.error(res);
     }
   };
 }
