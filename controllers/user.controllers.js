@@ -1,9 +1,66 @@
 const UserService = require("../services/user.services");
 const responseHandler = require("../handlers/response.handler");
+const { body, validationResult } = require('express-validator');
+
 
 class UserController {
   static async createUser(req, res) {
     try {
+      await body('first_name')
+      .notEmpty()
+      .withMessage('firstname is required')
+      .isLength({min: 1})
+      .withMessage('firstname minimum 1 character')
+      .run(req)
+
+      await body('last_name')
+      .notEmpty()
+      .withMessage('lastname is required')
+      .isLength({min: 1})
+      .withMessage('lastname minimum 1 character')
+      .run(req)
+
+      await body('ubication')
+      .notEmpty()
+      .withMessage('location is required')
+      .isLength({min: 1})
+      .withMessage('location minimum 1 character')
+      .run(req)
+
+      await body('email')
+      .notEmpty()
+      .withMessage('email is required')
+      .isEmail()
+      .withMessage('invalid email')
+      .run(req)
+
+      await body('username')
+      .notEmpty()
+      .withMessage('username is required')
+      .isLength({min: 4})
+      .withMessage('username minimum 4 character')
+      .run(req)
+
+      await body('password')
+      .notEmpty()
+      .withMessage('password is required')
+      .isLength({min: 8})
+      .withMessage('password minimum 8 character')
+      .matches(/^(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/)
+      .withMessage('password must contain at least one special character')
+      .matches(/\d/)
+      .withMessage('password must contain at least one number')
+      .matches(/[a-z]/)
+      .withMessage('password must contain at least one lowercase letter')
+      .matches(/[A-Z]/)
+      .withMessage('password must contain at least one capital letter')
+      .run(req)
+
+      const errors = validationResult(req)
+      if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+      }
+
       const userData = req.body;
       const userService = new UserService();
       const user = await userService.createUser(userData);
