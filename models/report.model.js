@@ -11,6 +11,16 @@ const reportSchema = new mongoose.Schema(
         require:true,
         default:false,
     },
+    floor_number:{
+        type:Number,
+        require:false
+    },
+
+    box_number:{
+        type:Number,
+        require:false
+    },
+    
 
     device:{
         type:String,
