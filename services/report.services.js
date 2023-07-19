@@ -58,6 +58,18 @@ class ReportService {
       throw new Error("Failed to fetch reports by status from the service.");
     }
   }
+
+  static async getReportById(id) {
+    try {
+      const report = await reportModel.findById({ _id: id });
+      if (!report) {
+        throw new Error("Report not found");
+      }
+      return report;
+    } catch (error) {
+      throw new Error("Failed to get report in service.");
+    }
+  }
 }
 
 module.exports = ReportService;

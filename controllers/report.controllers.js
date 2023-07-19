@@ -59,6 +59,16 @@ class ReportController {
       res.status(500).json({ error: "Failed to fetch reports by status." });
     }
   }
+
+  static async getReportById(req, res) {
+    try {
+      let { id } = req.params;
+      const report = await ReportService.getReportById(id);
+      res.status(200).json(report);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get report in controller." });
+    }
+  }
 }
 
 module.exports = ReportController;
