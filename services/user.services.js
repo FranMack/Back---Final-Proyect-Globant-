@@ -1,6 +1,6 @@
 const userModel = require("../models/user.model");
 const jsonwebtoken = require("jsonwebtoken");
-const responseHandler = require("../handlers/response.handler");
+const { badrequest } = require("../handlers/response.handler");
 const { generateToken } = require("../configs/token.config");
 
 class UserService {
@@ -26,13 +26,12 @@ class UserService {
         .findOne({ email })
         .select("email username password salt id first_name last_name");
 
-      if (!user) return responseHandler.badrequest(res, "User not exist");
+      if (!user) return badrequest(res, "User not exist");
       const validPassword = await user.validPassword(password);
 
-      if (!validPassword)
-        return responseHandler.badrequest(res, "Wrong password");
+      if (!validPassword) badrequest(res, "Wrong password");
       const token = generateToken(user);
-      console.log(token);
+
       user.password = undefined;
       user.salt = undefined;
 
