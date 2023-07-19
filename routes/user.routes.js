@@ -16,6 +16,7 @@ routerUser.post("/newReport", ReportController.createReport);
 routerUser.put("/editReport/:reportId", ReportController.editReport);
 routerUser.delete("/delete/:id", ReportController.deleteReport);
 routerUser.get("/all", ReportController.getAllReports);
+routerUser.get("/:id", ReportController.getReportById);
 routerUser.get("/status/:statusReport", ReportController.getAllReportsByStatus);
 
 routerUser.get("/allOffices", OfficeController.getAllOffices);
