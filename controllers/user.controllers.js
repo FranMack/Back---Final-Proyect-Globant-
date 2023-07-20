@@ -109,7 +109,6 @@ class UserController {
       const userProfile = await UserService.getProfile(username);
       res.json(userProfile);
     } catch (error) {
-      console.log(error);
       if (error.message === "Usuario no encontrado") {
         res.status(404).json({ error: "Usuario no encontrado" });
       } else {
@@ -147,7 +146,6 @@ class UserController {
 
       res.status(200).json({ message: "Perfil actualizado" });
     } catch (error) {
-      console.log(error);
       if (error.message === "Usuario no encontrado") {
         res.status(404).json({ error: "Usuario no encontrado" });
       } else {

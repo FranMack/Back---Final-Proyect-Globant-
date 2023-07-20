@@ -9,7 +9,6 @@ class ReportController {
       }
       const createdReport = await ReportService.createReport(reportData);
       res.status(201).json(createdReport);
-      console.log(createdReport);
     } catch (error) {
       res.status(500).json({ error: "Failed to create report." });
     }
