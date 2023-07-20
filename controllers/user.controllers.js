@@ -90,7 +90,7 @@ class UserController {
       user.password = undefined;
       user.salt = undefined;
 
-      const resulUser = {
+      const resultUser = {
         token,
         ...user._doc,
         id: user.id,
