@@ -1,6 +1,7 @@
 const UserService = require("../services/user.services");
 const responseHandler = require("../handlers/response.handler");
 const { body, validationResult } = require("express-validator");
+const { generateToken } = require("../configs/token.config");
 
 class UserController {
   static async createUser(req, res) {
@@ -71,14 +72,31 @@ class UserController {
 
   static loginUser = async (req, res) => {
     try {
-      const userData = req.body;
+      const { email, password } = req.body;
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
       const userService = new UserService();
-      const user = await userService.loginUser(res, userData);
-      res.status(201).json(user);
+      const user = await userService.loginUser(email);
+
+      if (!user) return responseHandler.badrequest(res, "User not exist");
+      const validPassword = await user.validPassword(password);
+
+      if (!validPassword)
+        return responseHandler.badrequest(res, "Wrong password");
+      const token = generateToken(user);
+
+      user.password = undefined;
+      user.salt = undefined;
+
+      const resulUser = {
+        token,
+        ...user._doc,
+        id: user.id,
+      };
+
+      res.status(201).json(resultUser);
     } catch (error) {
       res.status(500).json({ error: error.message });
     }

@@ -1,7 +1,4 @@
 const userModel = require("../models/user.model");
-const jsonwebtoken = require("jsonwebtoken");
-const { badrequest } = require("../handlers/response.handler");
-const { generateToken } = require("../configs/token.config");
 
 class UserService {
   async createUser(data) {
@@ -19,27 +16,13 @@ class UserService {
       throw new Error("Error creating user: " + error.message);
     }
   }
-  async loginUser(res, data) {
+  async loginUser(email) {
     try {
-      const { email, password } = data;
       const user = await userModel
         .findOne({ email })
         .select("email username password salt id first_name last_name");
 
-      if (!user) return badrequest(res, "User not exist");
-      const validPassword = await user.validPassword(password);
-
-      if (!validPassword) badrequest(res, "Wrong password");
-      const token = generateToken(user);
-
-      user.password = undefined;
-      user.salt = undefined;
-
-      return {
-        token,
-        ...user._doc,
-        id: user.id,
-      };
+      return user;
     } catch (error) {
       throw new Error("Error creating user: " + error.message);
     }
