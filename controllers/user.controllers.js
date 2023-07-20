@@ -20,7 +20,7 @@ class UserController {
         .withMessage("lastname minimum 1 character")
         .run(req);
 
-      await body("ubication")
+      await body("location")
         .notEmpty()
         .withMessage("location is required")
         .isLength({ min: 1 })
@@ -125,7 +125,7 @@ class UserController {
         email,
         phone_number,
         url_img,
-        ubication,
+        location,
         is_admin,
         first_name,
         last_name,
@@ -136,7 +136,7 @@ class UserController {
         phone_number,
         phone_number,
         url_img: url_img,
-        ubication: ubication,
+        location: location,
         is_admin: is_admin,
         first_name: first_name,
         last_name: last_name,
