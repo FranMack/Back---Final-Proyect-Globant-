@@ -20,13 +20,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    ubication: {
+    location: {
       type: String,
       requerid: true,
-    },
-    genre: {
-      type: String,
-      required: true,
     },
     email: {
       type: String,
@@ -50,11 +46,7 @@ const userSchema = new mongoose.Schema(
     },
     salt: {
       type: String,
-
       required: true,
-      select: false,
-
-      required: false,
       select: false,
     },
   },

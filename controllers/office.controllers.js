@@ -16,7 +16,6 @@ class OfficeController {
       const officeService = new OfficeService();
       const createdOffice = await officeService.createOffice(officeData);
       res.status(201).json(createdOffice);
-      console.log(createdOffice);
     } catch (error) {
       res.status(500).json({ error: "Failed to create office in controller." });
     }

@@ -18,7 +18,6 @@ class ReportService {
         { $set: reportData },
         { new: true }
       );
-      console.log("Updated report in service:", updatedReport);
       if (!updatedReport) {
         throw new Error("Report not found");
       }
@@ -32,7 +31,6 @@ class ReportService {
   static async deleteReport(id) {
     try {
       const deletedReport = await reportModel.deleteOne({ _id: id });
-      console.log("Deleted report:", deletedReport);
       return "Report deleted";
     } catch (error) {
       throw new Error("Failed to delete report in service.");
