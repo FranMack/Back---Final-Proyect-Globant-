@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const validateToken = (req, res) => {
   try {
     const carrierHeader = req.headers["authorization"];
-    console.log("carrier", carrierHeader);
     if (!carrierHeader) return false;
 
     const token = carrierHeader.split(" ")[1];

@@ -9,7 +9,6 @@ class ReportController {
       }
       const createdReport = await ReportService.createReport(reportData);
       res.status(201).json(createdReport);
-      console.log(createdReport);
     } catch (error) {
       res.status(500).json({ error: "Failed to create report." });
     }
@@ -57,6 +56,16 @@ class ReportController {
       res.status(200).json(reportsByStatus);
     } catch (error) {
       res.status(500).json({ error: "Failed to fetch reports by status." });
+    }
+  }
+
+  static async getReportById(req, res) {
+    try {
+      let { id } = req.params;
+      const report = await ReportService.getReportById(id);
+      res.status(200).json(report);
+    } catch (error) {
+      res.status(500).json({ error: "Failed to get report in controller." });
     }
   }
 }

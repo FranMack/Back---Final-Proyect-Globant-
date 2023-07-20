@@ -18,7 +18,6 @@ class ReportService {
         { $set: reportData },
         { new: true }
       );
-      console.log("Updated report in service:", updatedReport);
       if (!updatedReport) {
         throw new Error("Report not found");
       }
@@ -32,7 +31,6 @@ class ReportService {
   static async deleteReport(id) {
     try {
       const deletedReport = await reportModel.deleteOne({ _id: id });
-      console.log("Deleted report:", deletedReport);
       return "Report deleted";
     } catch (error) {
       throw new Error("Failed to delete report in service.");
@@ -56,6 +54,18 @@ class ReportService {
       return reportsByStatus;
     } catch (error) {
       throw new Error("Failed to fetch reports by status from the service.");
+    }
+  }
+
+  static async getReportById(id) {
+    try {
+      const report = await reportModel.findById({ _id: id });
+      if (!report) {
+        throw new Error("Report not found");
+      }
+      return report;
+    } catch (error) {
+      throw new Error("Failed to get report in service.");
     }
   }
 }
