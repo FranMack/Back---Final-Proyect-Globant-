@@ -68,6 +68,20 @@ class ReportService {
       throw new Error("Failed to get report in service.");
     }
   }
+
+  static async searchReports (device) {
+    try {
+      const regex = new RegExp(device, 'i');
+      const foundReports = await reportModel.find({ device: regex });
+      return foundReports;
+    } catch (error) {
+      console.error('Report not found:', error);
+      throw new Error('Failed to get report in service');
+    }
+  };
+
+
+
 }
 
 module.exports = ReportService;
