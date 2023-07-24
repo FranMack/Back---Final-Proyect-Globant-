@@ -69,19 +69,28 @@ class ReportController {
     }
   }
 
-  static async searchReports(req,res){
-
+  static async searchReports(req, res) {
     const { device } = req.query;
 
-  try {
-    const foundReports = await ReportService.searchReports(device);
-    res.json(foundReports);
-  } catch (error) {
-    console.error('Failed to get report in controller.', error);
-    res.status(500).json({ error: 'Failed to get report in controller.' });
+    try {
+      const foundReports = await ReportService.searchReports(device);
+      res.json(foundReports);
+    } catch (error) {
+      console.error("Failed to get report in controller.", error);
+      res.status(500).json({ error: "Failed to get report in controller." });
+    }
   }
 
+  static async filterReportsByDate(req, res) {
+    const { date } = req.query;
 
+    try {
+      const foundReports = await ReportService.filterReportsByDate(date);
+      res.json(foundReports);
+    } catch (error) {
+      console.error("Failed to get report in controller.", error);
+      res.status(500).json({ error: "Failed to get report in controller." });
+    }
   }
 }
 

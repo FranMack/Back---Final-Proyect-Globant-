@@ -81,6 +81,21 @@ class ReportService {
   };
 
 
+  static async filterReportsByDate(date){
+
+    try{
+
+      const foundReports = await reportModel.find({ date_report: date });
+      return foundReports;
+
+    }
+    catch (error) {
+      console.error('Report not found:', error);
+      throw new Error('Failed to get report in service');
+    }
+  }
+
+
 
 }
 
