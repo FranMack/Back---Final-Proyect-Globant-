@@ -12,7 +12,8 @@ routerReport.get(
   ReportController.getAllReportsByStatus
 );
 
-routerReport.get("/search",ReportController.searchReports)
+routerReport.get("/search", ReportController.searchReports);
+routerReport.get("/search-by-date", ReportController.filterReportsByDate);
 
 
 
