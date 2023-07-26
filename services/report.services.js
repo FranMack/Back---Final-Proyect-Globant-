@@ -1,4 +1,5 @@
 const reportModel = require("../models/report.model");
+const transporter=require("../configs/mailer")
 
 class ReportService {
   static async createReport(reportData) {
@@ -94,6 +95,37 @@ class ReportService {
       throw new Error('Failed to get report in service');
     }
   }
+
+
+  static async sendEmail(userEmail) {
+    try {
+
+      const contentHTML =`<h1>Hellow word</h1>
+      <br>
+    
+      <h1>${userEmail}</h1>`
+  
+
+      const mailOptions = {
+        from: "Globant <globantbo@gmail.com>",
+        to: userEmail,
+        subject: "Reporte de falla",
+        text: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.",
+        html:contentHTML
+      };
+
+      const info = await transporter.sendMail(mailOptions);
+      console.log("Correo electrónico enviado: " + info.response);
+
+      return "Correo electrónico enviado";
+    } catch (error) {
+      console.log(error);
+      throw new Error("Error al enviar el correo electrónico");
+    }
+  }
+
+
+
 
 
 
