@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const modelOptions = require("./model.options");
+const deskSchema = require("./desk.model");
 
 const officeSchema = new mongoose.Schema(
   {
@@ -20,10 +21,7 @@ const officeSchema = new mongoose.Schema(
       require: true,
     },
 
-    map: {
-      type: String,
-      require: true,
-    },
+    desks: [deskSchema],
   },
   {}
 );
