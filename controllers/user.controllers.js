@@ -85,11 +85,18 @@ class UserController {
       const userService = new UserService();
       const user = await userService.loginUser(email);
 
-      if (!user) return responseHandler.badrequest(res, "User not exist");
+      if (!user)
+        return responseHandler.badrequest(
+          res,
+          "Invalid credentials. Please try again."
+        );
       const validPassword = await user.validPassword(password);
 
       if (!validPassword)
-        return responseHandler.badrequest(res, "Wrong password");
+        return responseHandler.badrequest(
+          res,
+          "Invalid credentials. Please try again."
+        );
       const token = generateToken(user);
 
       user.password = undefined;
