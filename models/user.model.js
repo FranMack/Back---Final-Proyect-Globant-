@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const modelOptions = require("./model.options");
+const officeSchema = require("./office.model");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
@@ -48,6 +49,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       select: false,
+    },
+    office: {
+      type: String,
+      required: true,
     },
   },
   { modelOptions }

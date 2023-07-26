@@ -52,6 +52,7 @@ class UserService {
         is_admin,
         first_name,
         last_name,
+        office,
       } = dataUser;
 
       if (!user) {
@@ -65,6 +66,7 @@ class UserService {
       user.url_img = url_img;
       user.ubication = ubication;
       user.is_admin = is_admin || false;
+      user.office = office;
       return user.save();
     } catch (error) {
       throw new Error(error.message);
