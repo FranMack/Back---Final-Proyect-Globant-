@@ -97,20 +97,18 @@ class ReportService {
   }
 
 
-  static async sendEmail(userEmail) {
+  static async sendEmail(email,report,contentEmail) {
     try {
 
-      const contentHTML =`<h1>Hellow word</h1>
-      <br>
-    
-      <h1>${userEmail}</h1>`
+      const contentHTML =contentEmail;
+      
   
 
       const mailOptions = {
         from: "Globant <globantbo@gmail.com>",
-        to: userEmail,
+        to: email,
         subject: "Reporte de falla",
-        text: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.",
+        text: "Reporte",
         html:contentHTML
       };
 
