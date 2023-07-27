@@ -15,7 +15,4 @@ routerReport.get(
   ReportController.getAllReportsByStatus
 );
 
-
-
-
 module.exports = routerReport;

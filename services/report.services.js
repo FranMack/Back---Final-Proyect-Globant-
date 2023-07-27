@@ -48,8 +48,11 @@ class ReportService {
 
   static async getAllReportsByStatus(statusReport) {
     try {
+      const selectedStatuses = statusReport
+        .split(",")
+        .map((status) => status.trim());
       const reportsByStatus = await reportModel.find({
-        status_report: statusReport,
+        status_report: { $in: selectedStatuses },
       });
       return reportsByStatus;
     } catch (error) {
@@ -69,34 +72,40 @@ class ReportService {
     }
   }
 
-  static async searchReports (device) {
+  static async searchReports(device, statusReport) {
     try {
-      const regex = new RegExp(device, 'i');
-      const foundReports = await reportModel.find({ device: regex });
+      const regex = new RegExp(device, "i");
+      const selectedStatuses = statusReport
+        .split(",")
+        .map((status) => status.trim());
+
+      const foundReports = await reportModel.find({
+        device: regex,
+        status_report: { $in: selectedStatuses },
+      });
       return foundReports;
     } catch (error) {
-      console.error('Report not found:', error);
-      throw new Error('Failed to get report in service');
-    }
-  };
-
-
-  static async filterReportsByDate(date){
-
-    try{
-
-      const foundReports = await reportModel.find({ date_report: date });
-      return foundReports;
-
-    }
-    catch (error) {
-      console.error('Report not found:', error);
-      throw new Error('Failed to get report in service');
+      console.error("Report not found:", error);
+      throw new Error("Failed to get report in service");
     }
   }
 
+  static async filterReportsByDate(date, statusReport) {
+    try {
+      const selectedStatuses = statusReport
+        .split(",")
+        .map((status) => status.trim());
 
-
+      const foundReports = await reportModel.find({
+        date_report: date,
+        status_report: { $in: selectedStatuses },
+      });
+      return foundReports;
+    } catch (error) {
+      console.error("Report not found:", error);
+      throw new Error("Failed to get report in service");
+    }
+  }
 }
 
 module.exports = ReportService;
