@@ -22,7 +22,7 @@ class OfficeController {
   }
   static async selectDesk(req, res) {
     try {
-      const { officeId, deskNumber } = req.params;
+      const { officeId, deskNumber } = req.body;
 
       const message = await OfficeService.selectDesk(officeId, deskNumber);
 
