@@ -70,10 +70,9 @@ class ReportController {
   }
 
   static async searchReports(req, res) {
-    const { device } = req.query;
-
+    const { device, status } = req.query;
     try {
-      const foundReports = await ReportService.searchReports(device);
+      const foundReports = await ReportService.searchReports(device, status);
       res.json(foundReports);
     } catch (error) {
       console.error("Failed to get report in controller.", error);
@@ -82,10 +81,13 @@ class ReportController {
   }
 
   static async filterReportsByDate(req, res) {
-    const { date } = req.query;
+    const { date, status } = req.query;
 
     try {
-      const foundReports = await ReportService.filterReportsByDate(date);
+      const foundReports = await ReportService.filterReportsByDate(
+        date,
+        status
+      );
       res.json(foundReports);
     } catch (error) {
       console.error("Failed to get report in controller.", error);
