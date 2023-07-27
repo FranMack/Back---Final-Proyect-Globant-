@@ -94,6 +94,25 @@ class ReportController {
       res.status(500).json({ error: "Failed to get report in controller." });
     }
   }
+
+
+  static async sendEmail  (req, res){
+    const { email } = req.body;
+    const{contentEmail}=req.body
+  
+    try {
+      const response = await ReportService.sendEmail(email,contentEmail);
+      res.status(200).send(response);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error.message);
+    }
+  };
+
+
+
+
+
 }
 
 module.exports = ReportController;
