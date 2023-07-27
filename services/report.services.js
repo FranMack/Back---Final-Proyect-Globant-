@@ -97,7 +97,7 @@ class ReportService {
   }
 
 
-  static async sendEmail(email,report,contentEmail) {
+  static async sendEmail(email,contentEmail) {
     try {
 
       const contentHTML =contentEmail;

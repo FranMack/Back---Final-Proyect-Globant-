@@ -96,11 +96,10 @@ class ReportController {
 
   static async sendEmail  (req, res){
     const { email } = req.body;
-    const {report}=req.body
     const{contentEmail}=req.body
   
     try {
-      const response = await ReportService.sendEmail(email,report,contentEmail);
+      const response = await ReportService.sendEmail(email,contentEmail);
       res.status(200).send(response);
     } catch (error) {
       console.log(error);
