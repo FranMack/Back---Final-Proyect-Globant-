@@ -141,6 +141,7 @@ class UserController {
         is_admin,
         first_name,
         last_name,
+        office,
       } = req.body;
 
       const dataUser = {
@@ -152,6 +153,7 @@ class UserController {
         is_admin: is_admin,
         first_name: first_name,
         last_name: last_name,
+        office: office,
       };
 
       const user = await UserService.updateProfile(username, dataUser);
