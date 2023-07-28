@@ -51,7 +51,7 @@ const reportSchema = new mongoose.Schema(
       require: true,
     },
     date_report: {
-      type: Date,
+      type: String,
       require: true,
     },
   },
