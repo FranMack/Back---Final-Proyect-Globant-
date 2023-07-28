@@ -27,6 +27,7 @@ const reportSchema = new mongoose.Schema(
     },
     url_img: {
       type: String,
+      maxlength: 1000000000,
       require: false,
     },
     location: {
@@ -51,7 +52,7 @@ const reportSchema = new mongoose.Schema(
       require: true,
     },
     date_report: {
-      type: String,
+      type: Date,
       require: true,
     },
   },

@@ -7,12 +7,16 @@ const models = require("./models");
 require("dotenv").config();
 const routes = require("./routes/index");
 const app = express();
+const bodyParser = require("body-parser");
 
 app.use(morgan("tiny"));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(bodyParser.json({ limit: "15mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "15mb" }));
 app.use(cookieParser());
+
 app.use("/api/v1", routes);
 
 const PORT = process.env.PORT;

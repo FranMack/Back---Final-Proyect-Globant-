@@ -4,6 +4,7 @@ class ReportController {
   static async createReport(req, res) {
     try {
       const reportData = req.body;
+
       if (Object.keys(reportData).length === 0) {
         return res.status(400).json({ error: "Report data is empty." });
       }
