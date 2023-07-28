@@ -4,6 +4,7 @@ class ReportController {
   static async createReport(req, res) {
     try {
       const reportData = req.body;
+
       if (Object.keys(reportData).length === 0) {
         return res.status(400).json({ error: "Report data is empty." });
       }
@@ -95,24 +96,18 @@ class ReportController {
     }
   }
 
-
-  static async sendEmail  (req, res){
+  static async sendEmail(req, res) {
     const { email } = req.body;
-    const{contentEmail}=req.body
-  
+    const { contentEmail } = req.body;
+
     try {
-      const response = await ReportService.sendEmail(email,contentEmail);
+      const response = await ReportService.sendEmail(email, contentEmail);
       res.status(200).send(response);
     } catch (error) {
       console.log(error);
       res.status(500).send(error.message);
     }
-  };
-
-
-
-
-
+  }
 }
 
 module.exports = ReportController;
