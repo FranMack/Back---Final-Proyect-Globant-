@@ -49,8 +49,10 @@ class ReportController {
 
   static async getAllReportsByStatus(req, res) {
     try {
-      const statusReport = req.params.statusReport;
+      const { username, statusReport } = req.params;
+      console.log("pppp", username, statusReport);
       const reportsByStatus = await ReportService.getAllReportsByStatus(
+        username,
         statusReport
       );
       res.status(200).json(reportsByStatus);
@@ -70,9 +72,13 @@ class ReportController {
   }
 
   static async searchReports(req, res) {
-    const { device, status } = req.query;
+    const { username, device, status } = req.query;
     try {
-      const foundReports = await ReportService.searchReports(device, status);
+      const foundReports = await ReportService.searchReports(
+        username,
+        device,
+        status
+      );
       res.json(foundReports);
     } catch (error) {
       console.error("Failed to get report in controller.", error);
@@ -81,10 +87,11 @@ class ReportController {
   }
 
   static async filterReportsByDate(req, res) {
-    const { date, status } = req.query;
+    const { username, date, status } = req.query;
 
     try {
       const foundReports = await ReportService.filterReportsByDate(
+        username,
         date,
         status
       );
@@ -95,24 +102,18 @@ class ReportController {
     }
   }
 
-
-  static async sendEmail  (req, res){
+  static async sendEmail(req, res) {
     const { email } = req.body;
-    const{contentEmail}=req.body
-  
+    const { contentEmail } = req.body;
+
     try {
-      const response = await ReportService.sendEmail(email,contentEmail);
+      const response = await ReportService.sendEmail(email, contentEmail);
       res.status(200).send(response);
     } catch (error) {
       console.log(error);
       res.status(500).send(error.message);
     }
-  };
-
-
-
-
-
+  }
 }
 
 module.exports = ReportController;

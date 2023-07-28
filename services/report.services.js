@@ -1,5 +1,5 @@
 const reportModel = require("../models/report.model");
-const transporter=require("../configs/mailer")
+const transporter = require("../configs/mailer");
 
 class ReportService {
   static async createReport(reportData) {
@@ -47,12 +47,13 @@ class ReportService {
     }
   }
 
-  static async getAllReportsByStatus(statusReport) {
+  static async getAllReportsByStatus(username, statusReport) {
     try {
       const selectedStatuses = statusReport
         .split(",")
         .map((status) => status.trim());
       const reportsByStatus = await reportModel.find({
+        user: username,
         status_report: { $in: selectedStatuses },
       });
       return reportsByStatus;
@@ -73,7 +74,7 @@ class ReportService {
     }
   }
 
-  static async searchReports(device, statusReport) {
+  static async searchReports(username, device, statusReport) {
     try {
       const regex = new RegExp(device, "i");
       const selectedStatuses = statusReport
@@ -81,6 +82,7 @@ class ReportService {
         .map((status) => status.trim());
 
       const foundReports = await reportModel.find({
+        user: username,
         device: regex,
         status_report: { $in: selectedStatuses },
       });
@@ -91,13 +93,14 @@ class ReportService {
     }
   }
 
-  static async filterReportsByDate(date, statusReport) {
+  static async filterReportsByDate(username, date, statusReport) {
     try {
       const selectedStatuses = statusReport
         .split(",")
         .map((status) => status.trim());
 
       const foundReports = await reportModel.find({
+        user: username,
         date_report: date,
         status_report: { $in: selectedStatuses },
       });
@@ -108,20 +111,16 @@ class ReportService {
     }
   }
 
-
-  static async sendEmail(email,contentEmail) {
+  static async sendEmail(email, contentEmail) {
     try {
-
-      const contentHTML =contentEmail;
-      
-  
+      const contentHTML = contentEmail;
 
       const mailOptions = {
         from: "Globant <globantbo@gmail.com>",
         to: email,
         subject: "Reporte de falla",
         text: "Reporte",
-        html:contentHTML
+        html: contentHTML,
       };
 
       const info = await transporter.sendMail(mailOptions);
@@ -133,12 +132,6 @@ class ReportService {
       throw new Error("Error al enviar el correo electrónico");
     }
   }
-
-
-
-
-
-
 }
 
 module.exports = ReportService;

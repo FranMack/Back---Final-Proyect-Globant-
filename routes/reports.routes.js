@@ -11,13 +11,10 @@ routerReport.get("/search-by-date", ReportController.filterReportsByDate);
 routerReport.get("/all", ReportController.getAllReports);
 routerReport.get("/single/:id", ReportController.getReportById);
 routerReport.get(
-  "/status/:statusReport",
+  "/status/:username/:statusReport",
   ReportController.getAllReportsByStatus
 );
 
-routerReport.post("/send-email",ReportController.sendEmail)
-
-
-
+routerReport.post("/send-email", ReportController.sendEmail);
 
 module.exports = routerReport;
