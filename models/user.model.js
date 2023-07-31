@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema(
     },
     office: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   { modelOptions }
