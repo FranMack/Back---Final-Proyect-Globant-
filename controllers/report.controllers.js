@@ -29,6 +29,25 @@ class ReportController {
       res.status(500).json({ error: "Failed to edit report controllers" });
     }
   }
+
+  static async editStatusReport(req, res) {
+    try {
+      let reportId = req.params.reportId.trim();
+      const { status_report } = req.body; // Obtener el campo status_report del cuerpo de la solicitu
+  
+      const updatedReport = await ReportService.editStatusReport(
+        reportId,
+        status_report
+      );
+  
+      res.status(200).json(updatedReport);
+    } catch (error) {
+      console.error("Error in editStatusReport:", error);
+      res.status(500).json({ error: "Failed to edit status report controllers" });
+    }
+  }
+  
+
   static async deleteReport(req, res) {
     try {
       let { id } = req.params;
