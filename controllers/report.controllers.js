@@ -33,7 +33,7 @@ class ReportController {
   static async editStatusReport(req, res) {
     try {
       let reportId = req.params.reportId.trim();
-      const { status_report } = req.body; // Obtener el campo status_report del cuerpo de la solicitu
+      const { status_report } = req.body; 
   
       const updatedReport = await ReportService.editStatusReport(
         reportId,
