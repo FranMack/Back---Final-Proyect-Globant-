@@ -29,6 +29,23 @@ class ReportService {
     }
   }
 
+  static async editStatusReport(reportId, newStatus) {
+    try {
+      const updatedStatusReport = await reportModel.findByIdAndUpdate(
+        { _id: reportId },
+        { $set: { status_report: newStatus } },
+        { new: true }
+      );
+      if (!updatedStatusReport) {
+        throw new Error("Report not found");
+      }
+      return updatedStatusReport;
+    } catch (error) {
+      console.error("Error in editStatusReport service:", error);
+      throw new Error("Failed to edit report in service.");
+    }
+  }
+
   static async deleteReport(id) {
     try {
       const deletedReport = await reportModel.deleteOne({ _id: id });
