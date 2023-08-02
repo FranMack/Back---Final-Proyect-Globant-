@@ -19,27 +19,6 @@ class OfficeService {
       throw new Error("Failed to create office in service.");
     }
   }
-  static async selectDesk(officeId, deskNumber) {
-    try {
-      const office = await officeModel.findById(officeId);
-
-      const selectedDesk = office.desks.find(
-        (desk) => desk.deskNumber === deskNumber
-      );
-
-      if (!selectedDesk) {
-        throw new Error("Escritorio no encontrado");
-      }
-
-      selectedDesk.isOccupied = true;
-
-      await office.save();
-
-      return "Escritorio seleccionado actualizado correctamente";
-    } catch (error) {
-      throw new Error("Error al actualizar el escritorio seleccionado");
-    }
-  }
 }
 
 module.exports = OfficeService;
