@@ -5,8 +5,11 @@ const routerReport = express.Router();
 
 routerReport.post("/newReport", ReportController.createReport);
 routerReport.put("/editReport/:reportId", ReportController.editReport);
-routerReport.put("/editStateReport/:reportId", ReportController.editStatusReport);
-routerReport.delete("/delete/:id", ReportController.deleteReport);
+routerReport.put(
+  "/editStateReport/:reportId",
+  ReportController.editStatusReport
+);
+
 routerReport.get("/search", ReportController.searchReports);
 routerReport.get("/search-by-date", ReportController.filterReportsByDate);
 routerReport.get("/all", ReportController.getAllReports);
