@@ -20,17 +20,6 @@ class OfficeController {
       res.status(500).json({ error: "Failed to create office in controller." });
     }
   }
-  static async selectDesk(req, res) {
-    try {
-      const { officeId, deskNumber } = req.body;
-
-      const message = await OfficeService.selectDesk(officeId, deskNumber);
-
-      return res.status(200).json({ message });
-    } catch (error) {
-      return res.status(500).json({ error: error.message });
-    }
-  }
 }
 
 module.exports = OfficeController;

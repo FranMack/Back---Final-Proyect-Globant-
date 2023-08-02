@@ -1,3 +1,5 @@
+const officeModel = require("../models/office.model");
+const reportModel = require("../models/report.model");
 const userModel = require("../models/user.model");
 
 class UserAdminServices {
@@ -40,6 +42,42 @@ class UserAdminServices {
     } catch (error) {
       console.error("Report not found:", error);
       throw new Error("Failed to get report in service");
+    }
+  }
+  static async getUserReports(user) {
+    try {
+      const allReports = await reportModel.find({
+        user: user,
+      });
+
+      return allReports;
+    } catch (error) {
+      throw new Error("Failet to fetch all reports from the service");
+    }
+  }
+  static async selectDesk(officeId, deskNumber) {
+    try {
+      const office = await officeModel.findById(officeId);
+
+      const selectedDesk = office.desks.find(
+        (desk) => desk.deskNumber === deskNumber
+      );
+
+      if (!selectedDesk) {
+        throw new Error("Escritorio no encontrado");
+      }
+
+      if (selectedDesk.isOccupied) {
+        selectedDesk.isOccupied = false;
+      } else {
+        selectedDesk.isOccupied = true;
+      }
+
+      await office.save();
+
+      return "Escritorio seleccionado actualizado correctamente";
+    } catch (error) {
+      throw new Error("Error al actualizar el escritorio seleccionado");
     }
   }
 }
