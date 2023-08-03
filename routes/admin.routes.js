@@ -9,6 +9,7 @@ routerAdmin.get("/search", UserAdmincontroller.searchUsers);
 routerAdmin.get("/search-location", UserAdmincontroller.filterUsersByLocation);
 routerAdmin.delete("/report/delete/:id", ReportController.deleteReport);
 routerAdmin.get("/reports/:user", UserAdmincontroller.getUserReports);
+routerAdmin.put("/status-edit/:reportId", UserAdmincontroller.editReportStatus);
 routerAdmin.put("/select-desk", UserAdmincontroller.selectDesk);
 
 module.exports = routerAdmin;

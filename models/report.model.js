@@ -14,7 +14,7 @@ const reportSchema = new mongoose.Schema(
     floor_number: {
       type: Number,
       require: false,
-      default:0
+      default: 0,
     },
 
     box_number: {
@@ -49,7 +49,7 @@ const reportSchema = new mongoose.Schema(
       require: true,
     },
     status_report: {
-      type: String,
+      type: Object,
       require: true,
     },
     date_report: {

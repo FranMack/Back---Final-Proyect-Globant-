@@ -80,6 +80,26 @@ class UserAdminServices {
       throw new Error("Error al actualizar el escritorio seleccionado");
     }
   }
+
+  static async editStatus(reportId, newStatus) {
+    try {
+      const updatedReport = await reportModel.findByIdAndUpdate(
+        { _id: reportId },
+        { $set: newStatus },
+        { new: true }
+      );
+
+      console.log("Updated Report:", updatedReport);
+
+      if (!updatedReport) {
+        throw new Error("Report not found");
+      }
+      return updatedReport;
+    } catch (error) {
+      console.error("Error in editReport service:", error);
+      throw new Error("Failed to edit report in service.");
+    }
+  }
 }
 
 module.exports = UserAdminServices;
