@@ -55,6 +55,10 @@ const reportSchema = new mongoose.Schema(
     date_report: {
       type: Date,
       require: true,
+      set: function (value) {
+        const dateFormat = new Date(value).toISOString().split("T")[0];
+        return dateFormat;
+      },
     },
   },
   { modelOptions }
