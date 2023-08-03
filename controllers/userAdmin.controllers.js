@@ -49,6 +49,27 @@ class UserAdmincontroller {
       return res.status(500).json({ error: error.message });
     }
   }
+
+  static async editReportStatus(req, res) {
+    try {
+      let reportId = req.params.reportId.trim();
+      const { status_report } = req.body; // Use 'status' instead of 'status_report'
+
+      console.log("Received reportId:", reportId);
+      console.log("Received status:", status_report);
+
+      const updatedReport = await UserAdminServices.editStatus(reportId, {
+        status_report,
+      });
+
+      res.status(200).json(updatedReport);
+    } catch (error) {
+      console.error("Error in editStatusReport:", error);
+      res
+        .status(500)
+        .json({ error: "Failed to edit status report controllers" });
+    }
+  }
 }
 
 module.exports = UserAdmincontroller;
