@@ -14,7 +14,9 @@ class UserService {
     try {
       const user = await userModel
         .findOne({ email })
-        .select("email username password salt id first_name last_name");
+        .select(
+          "email username password salt id first_name last_name location phone_number"
+        );
 
       return user;
     } catch (error) {
