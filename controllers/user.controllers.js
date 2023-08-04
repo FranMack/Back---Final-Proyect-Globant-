@@ -64,7 +64,9 @@ class UserController {
 
       const userData = req.body;
 
-      const existingUser = await userModel.findOne({ email: userData.email });
+      const existingUser = await userModel.findOne({
+        $or: [{ email: userData.email }, { username: userData.username }],
+      });
       if (existingUser)
         return responseHandler.badrequest(res, "User already exists");
       const userService = new UserService();
