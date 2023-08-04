@@ -29,6 +29,7 @@ class UserAdmincontroller {
       res.status(500).json({ error: "Failed to fetch all users." });
     }
   }
+
   static async getUserReports(req, res) {
     try {
       const { user } = req.params;
