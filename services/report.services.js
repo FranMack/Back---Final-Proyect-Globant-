@@ -1,5 +1,6 @@
 const reportModel = require("../models/report.model");
 const transporter = require("../configs/mailer");
+const cheerio = require("cheerio");
 
 class ReportService {
   static async createReport(reportData) {
@@ -131,6 +132,8 @@ class ReportService {
   static async sendEmail(email, contentEmail) {
     try {
       const contentHTML = contentEmail;
+      const $ = cheerio.load(contentHTML);
+      const imagenBase64 = $("img").attr("src");
 
       const mailOptions = {
         from: "Globant <globantbo@gmail.com>",
@@ -138,6 +141,12 @@ class ReportService {
         subject: "Reporte de falla",
         text: "Reporte",
         html: contentHTML,
+        attachments: [
+          {
+            filename: `imagen.jpg`,
+            content: Buffer.from(imagenBase64.split(",")[1], "base64"), // Convierte Base64 a Buffer
+          },
+        ],
       };
 
       const info = await transporter.sendMail(mailOptions);
