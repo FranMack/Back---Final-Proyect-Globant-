@@ -2,9 +2,7 @@ const userModel = require("../models/user.model");
 
 class UserService {
   async createUser(data) {
-    console.log("o");
     try {
-      console.log("d");
       const newUser = new userModel(data);
       await newUser.setPassword(data.password);
       return await newUser.save();
@@ -44,7 +42,7 @@ class UserService {
         email,
         phone_number,
         url_img,
-        ubication,
+        location,
         is_admin,
         first_name,
         last_name,
@@ -60,7 +58,7 @@ class UserService {
       user.last_name = last_name;
       user.phone_number = phone_number;
       user.url_img = url_img;
-      user.ubication = ubication;
+      user.location = location;
       user.is_admin = is_admin || false;
       user.office = office;
       return user.save();
